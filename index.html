@@ -398,6 +398,7 @@ function navBook(d){loadBook(currentIdx+d)}
 
 // ── RENDER PAGE ──
 function renderPage(){
+  pageHadiths = [];
   const total=Math.ceil(filteredHadiths.length/PAGE_SZ);
   const start=(currentPage-1)*PAGE_SZ;
   const slice=filteredHadiths.slice(start,start+PAGE_SZ);
@@ -409,12 +410,16 @@ function renderPage(){
   document.getElementById("scrollArea").scrollTop=0;
 }
 
+// pageHadiths: نحفظ أحاديث الصفحة الحالية لاستخدامها في النسخ والمشاركة
+let pageHadiths = [];
+
 function buildCard(h,i){
   const num=h.hadithnumber||h.id||"—";
   const arabic=h.arabic||h.text||"";
   const narrator=(h.english&&h.english.narrator)?h.english.narrator.replace(/:\s*$/,""):"";
   const delay=Math.min(i*0.035,0.4).toFixed(2);
-  const safe=arabic.replace(/'/g,"\\'").replace(/`/g,"").substring(0,300);
+  // نخزن الحديث كاملاً في المصفوفة بدل تمريره في onclick
+  pageHadiths[i] = { num, arabic, narrator };
   return `
   <div class="hcard" id="hc${i}" style="animation-delay:${delay}s" onclick="toggleCard(${i})">
     <div class="htop">
@@ -427,10 +432,10 @@ function buildCard(h,i){
     <div class="hfooter">
       <div class="tags"><span class="tag">البخاري</span><span class="tag">حديث ${num}</span></div>
       <div class="acts">
-        <button class="abtn" onclick="copyH(event,'${safe}')">
+        <button class="abtn" onclick="copyH(event,${i})">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>نسخ
         </button>
-        <button class="abtn" onclick="shareH(event,${num},'${safe}')">
+        <button class="abtn" onclick="shareH(event,${i})">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>مشاركة
         </button>
       </div>
@@ -476,11 +481,28 @@ function onSearch(q){
 }
 
 // ── ACTIONS ──
-function copyH(e,txt){e.stopPropagation();navigator.clipboard?.writeText(txt).catch(()=>{});toast("تم نسخ الحديث ✓")}
-function shareH(e,num,txt){
+function copyH(e,i){
   e.stopPropagation();
-  if(navigator.share){navigator.share({title:"حديث البخاري رقم "+num,text:txt}).catch(()=>{})}
-  else{navigator.clipboard?.writeText(txt).catch(()=>{});toast("تم نسخ الحديث للمشاركة ✓")}
+  const h=pageHadiths[i]; if(!h) return;
+  const txt=h.arabic;
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(()=>toast("تم نسخ الحديث كاملاً ✓")).catch(()=>fallbackCopy(txt));
+  } else { fallbackCopy(txt); }
+}
+function fallbackCopy(txt){
+  const ta=document.createElement("textarea");
+  ta.value=txt; ta.style.cssText="position:fixed;top:-9999px;right:-9999px;opacity:0";
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try{ document.execCommand("copy"); toast("تم نسخ الحديث كاملاً ✓"); }
+  catch(e){ toast("تعذّر النسخ، يرجى النسخ يدوياً"); }
+  document.body.removeChild(ta);
+}
+function shareH(e,i){
+  e.stopPropagation();
+  const h=pageHadiths[i]; if(!h) return;
+  const txt=h.arabic;
+  if(navigator.share){ navigator.share({title:"حديث البخاري رقم "+h.num,text:txt}).catch(()=>{}); }
+  else{ if(navigator.clipboard) navigator.clipboard.writeText(txt).catch(()=>{}); toast("تم نسخ الحديث للمشاركة ✓"); }
 }
 
 // ── HELPERS ──
