@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>جامع صحيح البخاري</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -12,30 +12,53 @@
   --green-deep:#1a3a2a;--green-mid:#2d5a3d;--green-light:#e8f4ec;
   --cream:#faf8f3;--text-dark:#1c1a15;--text-mid:#4a4535;--text-muted:#8a8070;
   --border:rgba(184,134,11,0.2);--border-strong:rgba(184,134,11,0.45);
+  --header-h:64px;
 }
-body{font-family:'Cairo',sans-serif;background:var(--cream);color:var(--text-dark);height:100vh;display:flex;flex-direction:column;overflow:hidden}
 
-/* ── HEADER ── */
-.header{background:var(--green-deep);border-bottom:3px solid var(--gold);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;flex-shrink:0;box-shadow:0 2px 16px rgba(0,0,0,0.35)}
-.logo{display:flex;align-items:center;gap:12px}
-.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--gold),#e8c050);border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Amiri',serif;font-size:20px;color:var(--green-deep);font-weight:700;flex-shrink:0}
-.logo-text{color:#fff;font-size:16px;font-weight:700;line-height:1.2}
-.logo-sub{color:var(--gold-dim);font-size:11px;display:block;font-weight:400}
-.search-wrap{display:flex;align-items:center;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.16);border-radius:50px;padding:0 14px;gap:8px;width:280px;height:36px;transition:.2s}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Cairo',sans-serif;background:var(--cream);color:var(--text-dark);display:flex;flex-direction:column}
+
+/* ══ HEADER ══ */
+.header{
+  background:var(--green-deep);border-bottom:3px solid var(--gold);
+  padding:0 1rem;display:flex;align-items:center;justify-content:space-between;
+  height:var(--header-h);flex-shrink:0;box-shadow:0 2px 16px rgba(0,0,0,0.35);
+  gap:10px;z-index:100;
+}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--gold),#e8c050);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Amiri',serif;font-size:19px;color:var(--green-deep);font-weight:700;flex-shrink:0}
+.logo-text{color:#fff;font-size:15px;font-weight:700;line-height:1.2;white-space:nowrap}
+.logo-sub{color:var(--gold-dim);font-size:10px;display:block;font-weight:400}
+.search-wrap{display:flex;align-items:center;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.16);border-radius:50px;padding:0 12px;gap:7px;flex:1;max-width:320px;height:36px;transition:.2s}
 .search-wrap:focus-within{background:rgba(255,255,255,0.15);border-color:var(--gold-dim)}
-.search-wrap input{background:none;border:none;outline:none;color:#fff;font-family:'Cairo',sans-serif;font-size:13px;flex:1;text-align:right}
+.search-wrap input{background:none;border:none;outline:none;color:#fff;font-family:'Cairo',sans-serif;font-size:13px;flex:1;text-align:right;min-width:0}
 .search-wrap input::placeholder{color:rgba(255,255,255,0.38)}
-.header-stats{display:flex;gap:18px}
-.stat{color:var(--gold-dim);font-size:12px;font-weight:500;display:flex;align-items:center;gap:5px}
-.stat b{color:#fff;font-size:14px;font-weight:700}
+.header-stats{display:flex;gap:14px;flex-shrink:0}
+.stat{color:var(--gold-dim);font-size:11px;font-weight:500;display:flex;align-items:center;gap:4px}
+.stat b{color:#fff;font-size:13px;font-weight:700}
 
-/* ── BODY ── */
-.body{display:flex;flex:1;overflow:hidden}
+/* hamburger — mobile only */
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:4px;flex-shrink:0}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:.25s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
 
-/* ── SIDEBAR ── */
-.sidebar{width:255px;background:#fff;border-left:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
-.sb-head{padding:12px 14px;border-bottom:1px solid var(--border);background:var(--green-light)}
-.sb-title{font-size:12.5px;font-weight:700;color:var(--green-deep);margin-bottom:9px;display:flex;align-items:center;gap:6px}
+/* ══ PROGRESS ══ */
+.progress-wrap{height:3px;background:var(--border);flex-shrink:0}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--green-mid),var(--gold));transition:width .5s ease;width:0%}
+
+/* ══ BODY ══ */
+.body{display:flex;flex:1;overflow:hidden;position:relative}
+
+/* ══ SIDEBAR ══ */
+.sidebar{
+  width:255px;background:#fff;border-left:1px solid var(--border);
+  display:flex;flex-direction:column;flex-shrink:0;
+  transition:transform .28s ease;
+}
+.sb-head{padding:12px 14px;border-bottom:1px solid var(--border);background:var(--green-light);flex-shrink:0}
+.sb-title{font-size:12px;font-weight:700;color:var(--green-deep);margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .sb-search{width:100%;padding:6px 10px;border:1px solid var(--border-strong);border-radius:7px;font-family:'Cairo',sans-serif;font-size:12px;outline:none;text-align:right;color:var(--text-dark);background:#fff}
 .sb-list{flex:1;overflow-y:auto}
 .sb-list::-webkit-scrollbar{width:3px}
@@ -48,74 +71,127 @@ body{font-family:'Cairo',sans-serif;background:var(--cream);color:var(--text-dar
 .bcount{background:var(--green-light);color:var(--green-mid);font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap;flex-shrink:0}
 .book-row.active .bcount{background:var(--gold);color:#fff}
 
-/* ── MAIN ── */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.main-head{padding:16px 28px 14px;border-bottom:1px solid var(--border);background:#fff;flex-shrink:0;display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
-.mh-title{font-family:'Amiri',serif;font-size:26px;color:var(--green-deep);margin-bottom:4px;line-height:1.2}
-.mh-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.badge{background:var(--gold-light);color:var(--gold);border:1px solid var(--gold-dim);border-radius:5px;font-size:11px;font-weight:600;padding:2px 9px}
-.mh-info{color:var(--text-muted);font-size:12px}
-.mh-nav{display:flex;gap:6px;flex-shrink:0}
-.nbtn{padding:6px 12px;border:1px solid var(--border-strong);border-radius:7px;background:#fff;cursor:pointer;font-family:'Cairo',sans-serif;font-size:12px;color:var(--text-mid);transition:.13s;display:flex;align-items:center;gap:4px;white-space:nowrap}
+/* sidebar overlay on mobile */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:49}
+
+/* ══ MAIN ══ */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.main-head{
+  padding:12px 20px 10px;border-bottom:1px solid var(--border);background:#fff;
+  flex-shrink:0;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+}
+.mh-title{font-family:'Amiri',serif;font-size:22px;color:var(--green-deep);margin-bottom:3px;line-height:1.25}
+.mh-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{background:var(--gold-light);color:var(--gold);border:1px solid var(--gold-dim);border-radius:5px;font-size:10.5px;font-weight:600;padding:2px 8px;white-space:nowrap}
+.mh-info{color:var(--text-muted);font-size:11.5px}
+.mh-nav{display:flex;gap:5px;flex-shrink:0}
+.nbtn{padding:5px 10px;border:1px solid var(--border-strong);border-radius:6px;background:#fff;cursor:pointer;font-family:'Cairo',sans-serif;font-size:11.5px;color:var(--text-mid);transition:.13s;display:flex;align-items:center;gap:3px;white-space:nowrap}
 .nbtn:hover{background:var(--green-light);border-color:var(--green-mid);color:var(--green-deep)}
-.scroll-area{flex:1;overflow-y:auto;padding:18px 28px}
+
+.scroll-area{flex:1;overflow-y:auto;padding:14px 20px}
 .scroll-area::-webkit-scrollbar{width:4px}
 .scroll-area::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:4px}
 
-/* ── HADITH CARD ── */
-.hcard{background:#fff;border:1px solid var(--border);border-radius:11px;margin-bottom:13px;overflow:hidden;cursor:pointer;transition:box-shadow .18s,transform .18s}
-.hcard:hover{box-shadow:0 3px 18px rgba(184,134,11,0.11);transform:translateY(-1px)}
-.hcard.open{border-color:var(--gold-dim);box-shadow:0 4px 20px rgba(184,134,11,0.14)}
-.htop{padding:13px 16px;display:flex;align-items:flex-start;gap:13px}
-.hnum{min-width:42px;height:42px;background:var(--green-deep);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--gold-dim);font-size:12.5px;font-weight:700;flex-shrink:0}
+/* ══ HADITH CARD ══ */
+.hcard{background:#fff;border:1px solid var(--border);border-radius:11px;margin-bottom:12px;overflow:hidden;cursor:pointer;transition:box-shadow .18s,transform .18s}
+.hcard:hover{box-shadow:0 3px 16px rgba(184,134,11,0.11);transform:translateY(-1px)}
+.hcard.open{border-color:var(--gold-dim);box-shadow:0 4px 18px rgba(184,134,11,0.14)}
+.htop{padding:12px 14px;display:flex;align-items:flex-start;gap:11px}
+.hnum{min-width:38px;height:38px;background:var(--green-deep);border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--gold-dim);font-size:11.5px;font-weight:700;flex-shrink:0}
 .hbody{flex:1;min-width:0}
-.hnarrator{font-size:11px;color:var(--text-muted);margin-bottom:6px;direction:rtl;line-height:1.5}
+.hnarrator{font-size:11px;color:var(--text-muted);margin-bottom:5px;direction:rtl;line-height:1.5}
 .hnarrator b{color:var(--green-mid);font-weight:600}
-.htext{font-family:'Amiri',serif;font-size:16.5px;line-height:1.95;color:var(--text-dark);direction:rtl;word-break:break-word}
-.hfooter{padding:8px 16px;background:var(--cream);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.tags{display:flex;gap:6px;flex-wrap:wrap}
-.tag{background:var(--green-light);color:var(--green-mid);border-radius:20px;font-size:10.5px;padding:2px 9px;font-weight:500}
-.acts{display:flex;gap:6px}
-.abtn{padding:3px 11px;border:1px solid var(--border-strong);border-radius:5px;background:#fff;cursor:pointer;font-size:11px;color:var(--text-mid);font-family:'Cairo',sans-serif;transition:.13s;display:flex;align-items:center;gap:3px}
+.htext{font-family:'Amiri',serif;font-size:16px;line-height:2;color:var(--text-dark);direction:rtl;word-break:break-word}
+.hfooter{padding:8px 14px;background:var(--cream);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{background:var(--green-light);color:var(--green-mid);border-radius:20px;font-size:10px;padding:2px 8px;font-weight:500}
+.acts{display:flex;gap:5px}
+.abtn{padding:3px 10px;border:1px solid var(--border-strong);border-radius:5px;background:#fff;cursor:pointer;font-size:10.5px;color:var(--text-mid);font-family:'Cairo',sans-serif;transition:.13s;display:flex;align-items:center;gap:3px}
 .abtn:hover{background:var(--gold-light);color:var(--gold);border-color:var(--gold-dim)}
-.hdetails{display:none;padding:14px 16px;border-top:1px solid var(--border);background:#fffef9}
+.hdetails{display:none;padding:12px 14px;border-top:1px solid var(--border);background:#fffef9}
 .hcard.open .hdetails{display:block}
-.dlabel{font-size:10.5px;font-weight:700;color:var(--text-muted);letter-spacing:.7px;text-transform:uppercase;margin-bottom:5px}
-.dcontent{font-size:13px;color:var(--text-mid);line-height:1.85;margin-bottom:12px}
-.grade-pill{background:#e8f4ec;color:#2d5a3d;border:1px solid #2d5a3d;padding:3px 13px;border-radius:20px;font-size:12px;font-weight:700;display:inline-block}
+.dlabel{font-size:10px;font-weight:700;color:var(--text-muted);letter-spacing:.6px;text-transform:uppercase;margin-bottom:4px}
+.dcontent{font-size:13px;color:var(--text-mid);line-height:1.85;margin-bottom:10px}
+.grade-pill{background:#e8f4ec;color:#2d5a3d;border:1px solid #2d5a3d;padding:3px 12px;border-radius:20px;font-size:11.5px;font-weight:700;display:inline-block}
 
-/* ── LOADING / STATES ── */
-.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .75s linear infinite;margin:0 auto 14px}
+/* ══ STATES ══ */
+.spinner{width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .75s linear infinite;margin:0 auto 12px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-box{text-align:center;padding:50px 20px;color:var(--text-muted);font-size:13.5px}
+.loading-box{text-align:center;padding:40px 20px;color:var(--text-muted);font-size:13px}
 .empty-box{text-align:center;padding:40px 20px;color:var(--text-muted)}
-.empty-icon{font-size:40px;margin-bottom:10px}
-.error-box{background:#fff3f3;border:1px solid #fcc;border-radius:9px;padding:18px;margin:16px 0;text-align:center;color:#b00;font-size:13px;line-height:1.8}
+.empty-icon{font-size:38px;margin-bottom:10px}
+.error-box{background:#fff3f3;border:1px solid #fcc;border-radius:9px;padding:16px;margin:12px 0;text-align:center;color:#b00;font-size:12.5px;line-height:1.8}
 
-/* ── PAGINATION ── */
-.pager{display:flex;align-items:center;justify-content:center;gap:6px;padding:20px 0 28px;flex-wrap:wrap}
-.pbtn{padding:6px 12px;border:1px solid var(--border-strong);border-radius:7px;background:#fff;cursor:pointer;font-family:'Cairo',sans-serif;font-size:12.5px;color:var(--text-mid);transition:.13s;min-width:36px;text-align:center}
+/* ══ PAGINATION ══ */
+.pager{display:flex;align-items:center;justify-content:center;gap:5px;padding:16px 0 24px;flex-wrap:wrap}
+.pbtn{padding:5px 11px;border:1px solid var(--border-strong);border-radius:6px;background:#fff;cursor:pointer;font-family:'Cairo',sans-serif;font-size:12px;color:var(--text-mid);transition:.13s;min-width:34px;text-align:center}
 .pbtn:hover:not(:disabled){background:var(--green-light);border-color:var(--green-mid)}
 .pbtn.cur{background:var(--gold);color:#fff;border-color:var(--gold);font-weight:700}
 .pbtn:disabled{opacity:.35;cursor:not-allowed}
-.pdots{color:var(--text-muted);font-size:13px;padding:0 2px}
+.pdots{color:var(--text-muted);font-size:12px;padding:0 2px}
 
-/* ── PROGRESS BAR ── */
-.progress-wrap{height:3px;background:var(--border);position:relative;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--green-mid),var(--gold));transition:width .5s ease}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--green-deep);color:#fff;padding:10px 20px;border-radius:50px;font-size:12.5px;font-weight:500;transition:transform .28s ease;z-index:999;border:1px solid var(--gold-dim);white-space:nowrap}
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--green-deep);color:#fff;padding:9px 18px;border-radius:50px;font-size:12px;font-weight:500;transition:transform .28s ease;z-index:999;border:1px solid var(--gold-dim);white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .hcard{animation:fadeUp .28s ease backwards}
+
+/* ══ MOBILE RESPONSIVE ══ */
+@media (max-width: 700px) {
+  :root{--header-h:56px}
+
+  /* header */
+  .header{padding:0 12px;gap:8px}
+  .logo-text{font-size:14px}
+  .logo-sub{display:none}
+  .header-stats{display:none}
+  .hamburger{display:flex}
+  .search-wrap{max-width:none}
+
+  /* sidebar becomes drawer */
+  .sidebar{
+    position:fixed;top:0;right:0;bottom:0;z-index:50;
+    width:82vw;max-width:300px;
+    transform:translateX(100%);
+    box-shadow:-4px 0 20px rgba(0,0,0,0.2);
+  }
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay.show{display:block}
+
+  /* main fills full width */
+  .main{width:100%}
+  .main-head{padding:10px 14px 8px;flex-wrap:wrap}
+  .mh-title{font-size:18px}
+  .mh-nav{width:100%;justify-content:flex-start}
+
+  .scroll-area{padding:10px 12px}
+
+  /* cards */
+  .htop{padding:10px 12px;gap:9px}
+  .hnum{min-width:34px;height:34px;font-size:11px}
+  .htext{font-size:15px;line-height:1.9}
+  .hfooter{padding:7px 12px}
+  .hdetails{padding:10px 12px}
+
+  /* pagination */
+  .pager{gap:4px}
+  .pbtn{padding:5px 8px;font-size:11px;min-width:30px}
+}
+
+@media (max-width: 380px) {
+  .htext{font-size:14.5px}
+  .logo-text{font-size:13px}
+}
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
 <div class="header">
+  <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="القائمة">
+    <span></span><span></span><span></span>
+  </button>
   <div class="logo">
     <div class="logo-icon">ب</div>
     <div>
@@ -124,37 +200,39 @@ body{font-family:'Cairo',sans-serif;background:var(--cream);color:var(--text-dar
     </div>
   </div>
   <div class="search-wrap">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15" style="color:rgba(255,255,255,0.45);flex-shrink:0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="text" id="searchInput" placeholder="ابحث في أحاديث الكتاب الحالي..." oninput="onSearch(this.value)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color:rgba(255,255,255,0.45);flex-shrink:0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="ابحث في الأحاديث..." oninput="onSearch(this.value)">
   </div>
   <div class="header-stats">
-    <div class="stat"><b id="statBooks">—</b> كتاباً</div>
+    <div class="stat"><b id="statBooks">97</b> كتاباً</div>
     <div class="stat"><b>7,563</b> حديثاً</div>
   </div>
 </div>
 
-<div class="progress-wrap"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+<div class="progress-wrap"><div class="progress-fill" id="progressBar"></div></div>
 
 <!-- BODY -->
 <div class="body">
+  <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+
   <!-- SIDEBAR -->
-  <nav class="sidebar">
+  <nav class="sidebar" id="sidebar">
     <div class="sb-head">
       <div class="sb-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
         كتب صحيح البخاري
       </div>
-      <input class="sb-search" type="text" placeholder="ابحث في الكتب..." oninput="filterBooks(this.value)">
+      <input class="sb-search" type="text" placeholder="بحث في الكتب..." oninput="filterBooks(this.value)">
     </div>
     <div class="sb-list" id="sbList">
-      <div class="loading-box"><div class="spinner" style="width:26px;height:26px"></div>جار تحميل الكتب...</div>
+      <div class="loading-box"><div class="spinner" style="width:24px;height:24px"></div>جار التحميل...</div>
     </div>
   </nav>
 
   <!-- MAIN -->
   <div class="main">
     <div class="main-head" id="mainHead" style="display:none">
-      <div>
+      <div style="flex:1;min-width:0">
         <div class="mh-title" id="bookTitle">—</div>
         <div class="mh-meta">
           <span class="badge" id="bookBadge"></span>
@@ -164,10 +242,10 @@ body{font-family:'Cairo',sans-serif;background:var(--cream);color:var(--text-dar
       <div class="mh-nav">
         <button class="nbtn" onclick="navBook(-1)">
           السابق
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="m15 18-6-6 6-6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="m15 18-6-6 6-6"/></svg>
         </button>
         <button class="nbtn" onclick="navBook(1)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="m9 18 6-6-6-6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="m9 18 6-6-6-6"/></svg>
           التالي
         </button>
       </div>
@@ -175,7 +253,7 @@ body{font-family:'Cairo',sans-serif;background:var(--cream);color:var(--text-dar
     <div class="scroll-area" id="scrollArea">
       <div class="loading-box">
         <div class="spinner"></div>
-        جارٍ تحميل بيانات صحيح البخاري...
+        جارٍ تحميل جامع صحيح البخاري...
       </div>
     </div>
   </div>
@@ -184,15 +262,10 @@ body{font-family:'Cairo',sans-serif;background:var(--cream);color:var(--text-dar
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════════════════════
-//  CONFIG
-// ══════════════════════════════════════════════════════════
 const CDN = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions";
-const ARABIC_SECTIONS_BASE = CDN + "/ara-bukhari/sections";  // /1.json /2.json …
-const FULL_AR = CDN + "/ara-bukhari.min.json";               // full file fallback
+const ARABIC_SECTIONS_BASE = CDN + "/ara-bukhari/sections";
 const PAGE_SZ = 25;
 
-// Known Bukhari Arabic book names (sections 1–97)
 const BOOK_NAMES = {
   1:"كتاب بدء الوحي",2:"كتاب الإيمان",3:"كتاب العلم",4:"كتاب الوضوء",
   5:"كتاب الغسل",6:"كتاب الحيض",7:"كتاب التيمم",8:"كتاب الصلاة",
@@ -227,162 +300,132 @@ const BOOK_NAMES = {
   93:"كتاب الفتن",94:"كتاب الأحكام",95:"كتاب التمني",
   96:"كتاب أخبار الآحاد",97:"كتاب الاعتصام بالكتاب والسنة"
 };
-const TOTAL_SECTIONS = 97;
+const TOTAL = 97;
 
-// ══════════════════════════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════════════════════════
-let books = [];          // [{id,name,hadiths:[]}]  — loaded lazily
-let bookMeta = [];       // [{id,name,count:0}]  — sidebar list
-let currentBookIdx = 0;
+let bookMeta = [];
+let currentIdx = 0;
 let displayedHadiths = [];
 let filteredHadiths = [];
 let currentPage = 1;
+let loading = false;
 let searchTimer;
-let loadingBook = false;
 
-// ══════════════════════════════════════════════════════════
-//  INIT — build sidebar from known names, then load first
-// ══════════════════════════════════════════════════════════
+// ── INIT ──
 function init() {
-  bookMeta = Array.from({length:TOTAL_SECTIONS},(_,i)=>({
-    id: i+1,
-    name: BOOK_NAMES[i+1] || ("قسم " + (i+1)),
-    count: "...",
-    hadiths: null  // null = not loaded yet
+  bookMeta = Array.from({length:TOTAL},(_,i)=>({
+    id:i+1, name:BOOK_NAMES[i+1]||("قسم "+(i+1)),
+    count:"...", hadiths:null
   }));
-  document.getElementById("statBooks").textContent = TOTAL_SECTIONS;
   renderSidebar();
   loadBook(0);
 }
 
-// ══════════════════════════════════════════════════════════
-//  SIDEBAR
-// ══════════════════════════════════════════════════════════
+// ── SIDEBAR ──
 let sbQuery = "";
 function renderSidebar() {
-  const list = sbQuery
-    ? bookMeta.filter(b => b.name.includes(sbQuery))
-    : bookMeta;
-
-  document.getElementById("sbList").innerHTML = list.map(b => `
-    <div class="book-row ${b.id === bookMeta[currentBookIdx].id ? 'active' : ''}"
-         onclick="loadBookById(${b.id})">
+  const list = sbQuery ? bookMeta.filter(b=>b.name.includes(sbQuery)) : bookMeta;
+  document.getElementById("sbList").innerHTML = list.map(b=>`
+    <div class="book-row ${b.id===bookMeta[currentIdx].id?'active':''}" onclick="loadBookById(${b.id});closeSidebar()">
       <span class="bname">${b.name}</span>
       <span class="bcount">${b.count}</span>
-    </div>
-  `).join("");
+    </div>`).join("");
+}
+function filterBooks(q){sbQuery=q;renderSidebar()}
+
+// ── SIDEBAR TOGGLE (mobile) ──
+function toggleSidebar(){
+  const sb=document.getElementById("sidebar");
+  const ov=document.getElementById("overlay");
+  const hb=document.getElementById("hamburger");
+  const open=sb.classList.toggle("open");
+  ov.classList.toggle("show",open);
+  hb.classList.toggle("open",open);
+}
+function closeSidebar(){
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
+  document.getElementById("hamburger").classList.remove("open");
 }
 
-function filterBooks(q) { sbQuery = q; renderSidebar(); }
-
-// ══════════════════════════════════════════════════════════
-//  LOAD BOOK
-// ══════════════════════════════════════════════════════════
-async function loadBook(idx) {
-  if (loadingBook) return;
-  if (idx < 0 || idx >= TOTAL_SECTIONS) return;
-  currentBookIdx = idx;
-  currentPage = 1;
-  document.getElementById("searchInput").value = "";
+// ── LOAD BOOK ──
+async function loadBook(idx){
+  if(loading) return;
+  if(idx<0||idx>=TOTAL) return;
+  currentIdx=idx;
+  currentPage=1;
+  document.getElementById("searchInput").value="";
   renderSidebar();
 
-  const book = bookMeta[idx];
+  const book=bookMeta[idx];
+  document.getElementById("mainHead").style.display="flex";
+  document.getElementById("bookTitle").textContent=book.name;
+  document.getElementById("bookBadge").textContent="كتاب "+book.id;
+  document.getElementById("bookInfo").textContent=book.hadiths?`يحتوي على ${book.hadiths.length} حديثاً`:"جارٍ التحميل...";
+  setContent(`<div class="loading-box"><div class="spinner"></div>جارٍ تحميل ${book.name}...</div>`);
 
-  // Show book header immediately
-  document.getElementById("mainHead").style.display = "flex";
-  document.getElementById("bookTitle").textContent = book.name;
-  document.getElementById("bookBadge").textContent = "كتاب " + book.id;
-  document.getElementById("bookInfo").textContent = book.hadiths ? `يحتوي على ${book.hadiths.length} حديثاً` : "جارٍ التحميل...";
-  setScrollContent(`<div class="loading-box"><div class="spinner"></div>جارٍ تحميل ${book.name}...</div>`);
-
-  // Load hadiths if not cached
-  if (!book.hadiths) {
-    loadingBook = true;
-    setProgress(20);
-    try {
-      const url = `${ARABIC_SECTIONS_BASE}/${book.id}.min.json`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      const data = await res.json();
-      // Structure: { hadiths: [{hadithnumber, arabic}, ...] }
-      book.hadiths = (data.hadiths || data || []);
-      book.count = book.hadiths.length;
-      setProgress(80);
-    } catch(e) {
-      setProgress(0);
-      loadingBook = false;
-      setScrollContent(`<div class="error-box">
-        ⚠️ تعذّر تحميل ${book.name}.<br>
-        تأكد من اتصالك بالإنترنت ثم اضغط على الكتاب مجدداً.<br>
-        <small style="color:#999">${e.message}</small>
-      </div>`);
+  if(!book.hadiths){
+    loading=true;
+    setProgress(25);
+    try{
+      const r=await fetch(`${ARABIC_SECTIONS_BASE}/${book.id}.min.json`);
+      if(!r.ok) throw new Error("HTTP "+r.status);
+      const d=await r.json();
+      book.hadiths=d.hadiths||d||[];
+      book.count=book.hadiths.length;
+      setProgress(90);
+    }catch(e){
+      setProgress(0);loading=false;
+      setContent(`<div class="error-box">⚠️ تعذّر تحميل ${book.name}.<br>تأكد من اتصالك بالإنترنت ثم اضغط الكتاب مجدداً.<br><small>${e.message}</small></div>`);
       return;
     }
-    loadingBook = false;
+    loading=false;
   }
 
   setProgress(100);
-  setTimeout(()=>setProgress(0), 600);
-
-  document.getElementById("bookInfo").textContent = `يحتوي على ${book.hadiths.length} حديثاً`;
+  setTimeout(()=>setProgress(0),600);
+  document.getElementById("bookInfo").textContent=`يحتوي على ${book.hadiths.length} حديثاً`;
   renderSidebar();
-
-  displayedHadiths = book.hadiths;
-  filteredHadiths = displayedHadiths;
-  currentPage = 1;
+  displayedHadiths=book.hadiths;
+  filteredHadiths=displayedHadiths;
   renderPage();
 }
 
-function loadBookById(id) {
-  const idx = bookMeta.findIndex(b => b.id === id);
-  if (idx !== -1) loadBook(idx);
+function loadBookById(id){
+  const idx=bookMeta.findIndex(b=>b.id===id);
+  if(idx!==-1) loadBook(idx);
 }
+function navBook(d){loadBook(currentIdx+d)}
 
-function navBook(dir) {
-  loadBook(currentBookIdx + dir);
-}
-
-// ══════════════════════════════════════════════════════════
-//  RENDER HADITHS PAGE
-// ══════════════════════════════════════════════════════════
-function renderPage() {
-  const total = Math.ceil(filteredHadiths.length / PAGE_SZ);
-  const start = (currentPage - 1) * PAGE_SZ;
-  const slice = filteredHadiths.slice(start, start + PAGE_SZ);
-
-  if (!filteredHadiths.length) {
-    setScrollContent(`<div class="empty-box"><div class="empty-icon">🔍</div><p>لا توجد نتائج مطابقة</p></div>`);
+// ── RENDER PAGE ──
+function renderPage(){
+  const total=Math.ceil(filteredHadiths.length/PAGE_SZ);
+  const start=(currentPage-1)*PAGE_SZ;
+  const slice=filteredHadiths.slice(start,start+PAGE_SZ);
+  if(!filteredHadiths.length){
+    setContent(`<div class="empty-box"><div class="empty-icon">🔍</div><p>لا توجد نتائج مطابقة</p></div>`);
     return;
   }
-
-  const cards = slice.map((h, i) => buildCard(h, i)).join("");
-  const pager = total > 1 ? buildPager(currentPage, total) : "";
-  setScrollContent(cards + pager);
-  document.getElementById("scrollArea").scrollTop = 0;
+  setContent(slice.map((h,i)=>buildCard(h,i)).join("")+(total>1?buildPager(currentPage,total):""));
+  document.getElementById("scrollArea").scrollTop=0;
 }
 
-function buildCard(h, i) {
-  const num = h.hadithnumber || h.id || "—";
-  const arabic = h.arabic || h.text || "";
-  const narrator = (h.english && h.english.narrator) ? h.english.narrator.replace(/:\s*$/,"") : "";
-  const delay = Math.min(i * 0.035, 0.4).toFixed(2);
-  const safe = arabic.replace(/'/g,"\\'").substring(0,300);
-
+function buildCard(h,i){
+  const num=h.hadithnumber||h.id||"—";
+  const arabic=h.arabic||h.text||"";
+  const narrator=(h.english&&h.english.narrator)?h.english.narrator.replace(/:\s*$/,""):"";
+  const delay=Math.min(i*0.035,0.4).toFixed(2);
+  const safe=arabic.replace(/'/g,"\\'").replace(/`/g,"").substring(0,300);
   return `
   <div class="hcard" id="hc${i}" style="animation-delay:${delay}s" onclick="toggleCard(${i})">
     <div class="htop">
       <div class="hnum">${num}</div>
       <div class="hbody">
-        ${narrator ? `<div class="hnarrator"><b>${narrator}</b></div>` : ""}
+        ${narrator?`<div class="hnarrator"><b>${narrator}</b></div>`:""}
         <div class="htext">${arabic}</div>
       </div>
     </div>
     <div class="hfooter">
-      <div class="tags">
-        <span class="tag">البخاري</span>
-        <span class="tag">حديث ${num}</span>
-      </div>
+      <div class="tags"><span class="tag">البخاري</span><span class="tag">حديث ${num}</span></div>
       <div class="acts">
         <button class="abtn" onclick="copyH(event,'${safe}')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>نسخ
@@ -393,8 +436,8 @@ function buildCard(h, i) {
       </div>
     </div>
     <div class="hdetails">
-      ${narrator ? `<div class="dlabel">الراوي</div><div class="dcontent">${narrator}</div>` : ""}
-      <div class="dlabel">رقم الحديث في الصحيح</div>
+      ${narrator?`<div class="dlabel">الراوي</div><div class="dcontent">${narrator}</div>`:""}
+      <div class="dlabel">رقم الحديث</div>
       <div class="dcontent">${num}</div>
       <div class="dlabel">درجة الحديث</div>
       <div><span class="grade-pill">صحيح</span></div>
@@ -402,80 +445,51 @@ function buildCard(h, i) {
   </div>`;
 }
 
-function buildPager(cur, total) {
-  const pages = new Set([1, total, cur, cur-1, cur+1].filter(p=>p>=1&&p<=total));
-  const sorted = [...pages].sort((a,b)=>a-b);
-  let h = `<div class="pager">`;
-  h += `<button class="pbtn" onclick="goPage(${cur-1})" ${cur===1?"disabled":""}>‹ السابق</button>`;
-  let prev = 0;
-  for (const p of sorted) {
-    if (prev && p-prev>1) h += `<span class="pdots">…</span>`;
-    h += `<button class="pbtn ${p===cur?"cur":""}" onclick="goPage(${p})">${p}</button>`;
-    prev = p;
+function buildPager(cur,total){
+  const pages=new Set([1,total,cur,cur-1,cur+1].filter(p=>p>=1&&p<=total));
+  const sorted=[...pages].sort((a,b)=>a-b);
+  let h=`<div class="pager"><button class="pbtn" onclick="goPage(${cur-1})" ${cur===1?"disabled":""}>‹ السابق</button>`;
+  let prev=0;
+  for(const p of sorted){
+    if(prev&&p-prev>1) h+=`<span class="pdots">…</span>`;
+    h+=`<button class="pbtn ${p===cur?"cur":""}" onclick="goPage(${p})">${p}</button>`;
+    prev=p;
   }
-  h += `<button class="pbtn" onclick="goPage(${cur+1})" ${cur===total?"disabled":""}>التالي ›</button>`;
-  h += `</div>`;
+  h+=`<button class="pbtn" onclick="goPage(${cur+1})" ${cur===total?"disabled":""}>التالي ›</button></div>`;
   return h;
 }
 
-function goPage(p) {
-  const total = Math.ceil(filteredHadiths.length / PAGE_SZ);
-  if (p<1||p>total) return;
-  currentPage = p;
-  renderPage();
+function goPage(p){
+  const total=Math.ceil(filteredHadiths.length/PAGE_SZ);
+  if(p<1||p>total) return;
+  currentPage=p;renderPage();
 }
+function toggleCard(i){document.getElementById("hc"+i)?.classList.toggle("open")}
 
-function toggleCard(i) {
-  document.getElementById("hc"+i)?.classList.toggle("open");
-}
-
-// ══════════════════════════════════════════════════════════
-//  SEARCH
-// ══════════════════════════════════════════════════════════
-function onSearch(q) {
+// ── SEARCH ──
+function onSearch(q){
   clearTimeout(searchTimer);
-  searchTimer = setTimeout(()=>{
-    filteredHadiths = q.trim()
-      ? displayedHadiths.filter(h=>(h.arabic||h.text||"").includes(q))
-      : displayedHadiths;
-    currentPage = 1;
-    renderPage();
-  }, 280);
+  searchTimer=setTimeout(()=>{
+    filteredHadiths=q.trim()?displayedHadiths.filter(h=>(h.arabic||h.text||"").includes(q)):displayedHadiths;
+    currentPage=1;renderPage();
+  },280);
 }
 
-// ══════════════════════════════════════════════════════════
-//  ACTIONS
-// ══════════════════════════════════════════════════════════
-function copyH(e, txt) {
+// ── ACTIONS ──
+function copyH(e,txt){e.stopPropagation();navigator.clipboard?.writeText(txt).catch(()=>{});toast("تم نسخ الحديث ✓")}
+function shareH(e,num,txt){
   e.stopPropagation();
-  navigator.clipboard?.writeText(txt).catch(()=>{});
-  toast("تم نسخ الحديث ✓");
-}
-function shareH(e, num, txt) {
-  e.stopPropagation();
-  if (navigator.share) {
-    navigator.share({title:"حديث من صحيح البخاري رقم "+num, text:txt}).catch(()=>{});
-  } else {
-    navigator.clipboard?.writeText(txt).catch(()=>{});
-    toast("تم نسخ الحديث للمشاركة ✓");
-  }
+  if(navigator.share){navigator.share({title:"حديث البخاري رقم "+num,text:txt}).catch(()=>{})}
+  else{navigator.clipboard?.writeText(txt).catch(()=>{});toast("تم نسخ الحديث للمشاركة ✓")}
 }
 
-// ══════════════════════════════════════════════════════════
-//  HELPERS
-// ══════════════════════════════════════════════════════════
-function setScrollContent(html) {
-  document.getElementById("scrollArea").innerHTML = html;
-}
-function setProgress(pct) {
-  document.getElementById("progressBar").style.width = pct + "%";
-}
-function toast(msg) {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  clearTimeout(t._t);
-  t._t = setTimeout(()=>t.classList.remove("show"), 2400);
+// ── HELPERS ──
+function setContent(h){document.getElementById("scrollArea").innerHTML=h}
+function setProgress(p){document.getElementById("progressBar").style.width=p+"%"}
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;t.classList.add("show");
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2400);
 }
 
 init();
